@@ -3,183 +3,561 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>114學年度OOXX會議 - 議程表</title>
-    <!-- 引入 Tailwind CSS 快速建立樣式 -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>行前資訊 | 聯席會議</title>
     <style>
-        /* 隱藏滾動條但保留滾動功能，讓手機版體驗更好 */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        :root {
+            --primary: #1f2937;
+            --secondary: #4b5563;
+            --accent: #0284c7; /* A professional blue */
+            --bg: #f3f4f6;
+            --surface: #ffffff;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px 10px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--surface);
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 20px 25px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        /* A subtle top border color accent */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #0284c7, #38bdf8);
+        }
+        .logo {
+            width: 70px;
+            height: 70px;
+            background-color: #f1f5f9;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+        .subtitle {
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+        .badges {
+            margin: 15px 0 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .badge {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .section {
+            padding: 30px 25px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .profile {
+            text-align: center;
+        }
+        .profile-label {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .profile-name {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        .profile-title {
+            font-size: 0.95rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #fef3c7;
+            color: #b45309;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+        .status-badge::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #f59e0b;
+            border-radius: 50%;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        .btn {
+            flex: 1;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            background-color: #f8fafc;
+            color: #334155;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border: 1px solid #cbd5e1;
+        }
+        .btn:hover {
+            background-color: #e2e8f0;
+            border-color: #94a3b8;
+        }
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #111827;
+        }
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 6px;
+            bottom: 0;
+            width: 2px;
+            background-color: #e2e8f0;
+        }
+        .timeline-day {
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 20px;
+            margin-top: 10px;
+            position: relative;
+            font-size: 1.05rem;
+        }
+        .timeline-day:first-child {
+            margin-top: 0;
+        }
+        .timeline-day::before {
+            content: '';
+            position: absolute;
+            left: -26.5px;
+            top: 7px;
+            width: 14px;
+            height: 14px;
+            background-color: #e0f2fe;
+            border: 3px solid var(--accent);
+            border-radius: 50%;
+        }
+        .timeline-item {
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background-color: #94a3b8;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 1px #cbd5e1;
+        }
+        .time {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #475569;
+            background-color: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+        .event {
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 4px 0;
+            color: #1e293b;
+        }
+        .location {
+            font-size: 0.875rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .transport {
+            font-size: 0.85rem;
+            color: #0369a1;
+            background-color: #f0f9ff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-top: 6px;
+            display: inline-block;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        @media (min-width: 480px) {
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .info-item.full-width {
+                grid-column: span 2;
+            }
+        }
+        .info-item {
+            background-color: #f8fafc;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        .info-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .info-value {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+        .form-section {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #334155;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        .btn-submit {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        .btn-submit:hover {
+            background-color: #0369a1;
+        }
+        .qr-section {
+            text-align: center;
+            background-color: white;
+        }
+        .qr-wrapper {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background-color: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+        .qr-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .qr-instructions {
+            font-size: 0.9rem;
+            color: #64748b;
+            max-width: 250px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            color: #94a3b8;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body>
 
-    <!-- 頂部導覽列 -->
-    <nav class="bg-blue-800 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            <button onclick="history.back()" class="flex items-center text-sm hover:text-blue-200 transition">
-                <span>⬅ 返回報到</span>
-            </button>
-            <h1 class="text-lg md:text-xl font-bold truncate px-4">會議議程表</h1>
-            <div class="w-16"></div> <!-- 平衡版面用 -->
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">校徽</div>
+        <div class="title">114學年度高雄美食會議</div>
+        <div class="subtitle">00大學 · 115年6月24日–25日</div>
+        <div class="badges">
+            <span class="badge">行前通知 No.1111</span>
+            <span class="badge" style="background-color: #f3f4f6; color: #4b5563;">與會 - 一般</span>
         </div>
-    </nav>
+    </div>
 
-    <!-- 主內容區 -->
-    <main class="max-w-4xl mx-auto px-4 py-6">
+    <!-- Profile -->
+    <div class="section profile">
+        <div class="profile-label">PRE-EVENT BRIEFING</div>
+        <div class="profile-name">黃00</div>
+        <div class="profile-title">00XX大學 · 00處 · 000</div>
         
-        <!-- 會議標題區 -->
-        <div class="text-center mb-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">114學年度高雄旅遊會議</h2>
-            <p class="text-gray-500">主辦單位：OOO大學 | 2026.06.24 - 06.25</p>
+        <div class="status-badge">
+            尚未報到 · 當天請出示下方 QR Code
         </div>
 
-        <!-- 日期切換 Tab -->
-        <div class="flex justify-center space-x-2 mb-6">
-            <button id="tab-day1" onclick="switchTab('day1')" class="px-6 py-2 rounded-full font-semibold transition bg-blue-600 text-white shadow">
-                第一天 (6/24)
-            </button>
-            <button id="tab-day2" onclick="switchTab('day2')" class="px-6 py-2 rounded-full font-semibold transition bg-gray-200 text-gray-600 hover:bg-gray-300">
-                第二天 (6/25)
-            </button>
+        <div class="btn-group">
+            <a href="#" class="btn">📅 專屬議程</a>
+            <a href="#" class="btn">🗺️ 查看專題演講座位圖</a>
         </div>
+    </div>
 
-        <!-- 第一天議程 (Day 1) -->
-        <div id="day1" class="space-y-4">
+    <!-- Schedule Timeline -->
+    <div class="section">
+        <div class="section-title">當 天 重 點 時 程</div>
+        
+        <div class="timeline">
+            <!-- Day 1 -->
+            <div class="timeline-day">第一天 · 6/24（星期三）</div>
             
-            <!-- 單一議程項目 -->
-            <div class="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <span class="text-blue-600 font-bold text-sm">13:00 - 13:30</span>
-                        <h3 class="text-lg font-bold mt-1">與會貴賓報到</h3>
-                        <p class="text-sm text-gray-600 mt-1">📍 國研大樓 1 樓川堂</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 單一議程項目 -->
-            <div class="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-center">
-                    <div>
-                        <span class="text-blue-600 font-bold text-sm">13:30 - 14:00</span>
-                        <h3 class="text-lg font-bold mt-1">開幕式與長官致詞</h3>
-                        <p class="text-sm text-gray-600 mt-1">📍 國研大樓B2 國際會議中心A廳</p>
-                    </div>
-                    <div class="mt-3 md:mt-0">
-                        <span class="inline-flex items-center text-xs font-medium bg-green-100 text-green-800 px-2 py-1 rounded">
-                            📢 重要提醒：請配戴名牌
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 分軌議程 (Split Tracks) -->
-            <div class="mt-6 mb-2">
-                <span class="text-sky-800 font-bold text-sm ml-2">14:00 - 16:00 (分軌座談)</span>
+            <div class="timeline-item">
+                <div class="time">08:50</div>
+                <div class="event">集合搭乘接駁</div>
+                <div class="location">📍 高鐵左營站／臺鐵高雄站／捷運後驛站</div>
+                <div class="transport">您的到校方式：搭乘接駁車1️⃣_7:00 發車</div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Track A -->
-                <div class="bg-white p-4 rounded-lg shadow border-t-4 border-emerald-500 flex flex-col justify-between">
-                    <div>
-                        <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-1 rounded">A主題：食物面</span>
-                        <h3 class="text-lg font-bold mt-3">高醫美食分享</h3>
-                        <p class="text-sm text-gray-600 mt-2">主持人：總務長<br>📍 國研大樓B2 國際會議中心A廳</p>
-                    </div>
-                    <a href="#" class="mt-4 text-sm text-blue-600 hover:underline flex items-center">
-                        📄 下載簡報資料
-                    </a>
-                </div>
-
-                <!-- Track B -->
-                <div class="bg-white p-4 rounded-lg shadow border-t-4 border-purple-500 flex flex-col justify-between">
-                    <div>
-                        <span class="text-xs font-bold bg-purple-100 text-purple-800 px-2 py-1 rounded">B主題：住行</span>
-                        <h3 class="text-lg font-bold mt-3">高醫周邊住宿分享</h3>
-                        <p class="text-sm text-gray-600 mt-2">主持人：副校長<br>📍 國研大樓B2 國際會議中心B廳</p>
-                    </div>
-                    <span class="mt-4 text-sm text-gray-400 flex items-center">
-                        📄 簡報準備中...
-                    </span>
-                </div>
+            <div class="timeline-item">
+                <div class="time">08:00–08:30</div>
+                <div class="event">報到</div>
+                <div class="location">📍 國研大樓B2 國際會議中心A廳</div>
             </div>
+
+            <div class="timeline-item">
+                <div class="time">08:30</div>
+                <div class="event">開幕式</div>
+                <div class="location">📍 國研大樓B2 國際會議中心A廳</div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="timeline-day">第二天 · 6/25（星期四）</div>
             
-            <!-- 休息時間 -->
-            <div class="bg-orange-50 p-3 rounded-lg text-center border border-orange-100 shadow-sm mt-4">
-                <span class="text-orange-600 font-bold">16:00 - 16:20 ☕ 下午茶與交流時間</span>
+            <div class="timeline-item">
+                <div class="time">08:30–09:00</div>
+                <div class="event">報到</div>
+                <div class="location">📍 國研大樓B2 國際會議中心A廳</div>
+                <div class="transport">您的到校方式：搭乘接駁車</div>
             </div>
 
+            <div class="timeline-item">
+                <div class="time">12:20</div>
+                <div class="event">閉幕</div>
+                <div class="location">📍 國研大樓B2 國際會議中心A廳</div>
+            </div>
         </div>
+    </div>
 
-        <!-- 第二天議程 (Day 2) - 預設隱藏 -->
-        <div id="day2" class="space-y-4 hidden">
-            <div class="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
-                <div>
-                    <span class="text-blue-600 font-bold text-sm">09:00 - 10:30</span>
-                    <h3 class="text-lg font-bold mt-1">專題演講：高雄美食巡迴</h3>
-                    <p class="text-sm text-gray-600 mt-1">📍 國研大樓B2 國際會議中心A廳</p>
-                </div>
+    <!-- Details Grid -->
+    <div class="section">
+        <div class="section-title">您 的 議 程 資 訊</div>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">出席天數</div>
+                <div class="info-value">🆎 兩天皆參加</div>
             </div>
-            
-            <div class="bg-white p-4 rounded-lg shadow border-l-4 border-gray-400">
-                <div>
-                    <span class="text-blue-600 font-bold text-sm">10:30 - 11:30</span>
-                    <h3 class="text-lg font-bold mt-1">綜合座談與閉幕</h3>
-                    <p class="text-sm text-gray-600 mt-1">📍 國研大樓B2 國際會議中心A廳</p>
-                </div>
+            <div class="info-item">
+                <div class="info-label">用餐習慣</div>
+                <div class="info-value">🍖 葷</div>
             </div>
-            
-            <div class="bg-green-50 p-4 rounded-lg text-center shadow-sm border border-green-100 mt-4">
-                <span class="text-green-700 font-bold">🎉 會議圓滿結束，賦歸</span>
+            <div class="info-item">
+                <div class="info-label">第一天到校交通</div>
+                <div class="info-value">搭乘接駁車1️⃣_7:00 發車</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">第二天到校交通</div>
+                <div class="info-value">搭乘接駁車</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">車牌號碼（汽車）</div>
+                <div class="info-value" style="color: #94a3b8;">未提供</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">專題演講座號</div>
+                <div class="info-value">第7排第10號</div>
+            </div>
+            <div class="info-item full-width">
+                <div class="info-label">分組座談一</div>
+                <div class="info-value">店面：阿發美食</div>
+            </div>
+            <div class="info-item full-width">
+                <div class="info-label">分組座談二</div>
+                <div class="info-value">攤位：阿月麵線</div>
+            </div>
+            <div class="info-item full-width">
+                <div class="info-label">分組座談三</div>
+                <div class="info-value">地下室：全家便利商店</div>
             </div>
         </div>
 
-    </main>
+        <!-- Form Update -->
+        <div class="form-section">
+            <div style="font-weight: 700; margin-bottom: 15px; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+                <span>✎</span> 修改車牌號碼／用餐習慣
+            </div>
+            <form onsubmit="event.preventDefault(); alert('修改已儲存！');">
+                <div class="form-group">
+                    <label class="form-label">用餐習慣</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="diet" value="meat" checked> 🍖 葷</label>
+                        <label class="radio-label"><input type="radio" name="diet" value="veg"> 🥗 素</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">車牌號碼（停車／通行用，可留空）</label>
+                    <input type="text" class="form-control" placeholder="請輸入車牌號碼">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">校外參訪（中都濕地）</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="tour" value="yes" checked> 參加</label>
+                        <label class="radio-label"><input type="radio" name="tour" value="no"> 取消參加</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">儲 存 修 改</button>
+            </form>
+        </div>
+    </div>
 
-    <!-- 頁腳 -->
-    <footer class="text-center py-6 text-gray-400 text-sm mt-8">
-        <p>&copy; 2026 NCHU NLP Lab. All Rights Reserved.</p>
-    </footer>
+    <!-- QR Code Section -->
+    <div class="section qr-section">
+        <div class="section-title" style="justify-content: center;">您 的 專 屬 報 到 QR CODE</div>
+        <div class="qr-wrapper">
+            <div class="qr-placeholder">
+                <div class="qr-icon">📱</div>
+                <div>[ QR Code 圖片位置 ]</div>
+            </div>
+        </div>
+        <div class="qr-instructions">
+            📌 請截圖保存，當天於報到處出示掃描<br>
+            <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-block; margin-top: 8px;">點按此處開啟全螢幕報到</a>
+        </div>
+    </div>
 
-    <!-- 切換 Tab 的 JavaScript 邏輯 -->
-    <script>
-        function switchTab(day) {
-            // 取得 DOM 元素
-            const day1 = document.getElementById('day1');
-            const day2 = document.getElementById('day2');
-            const tabDay1 = document.getElementById('tab-day1');
-            const tabDay2 = document.getElementById('tab-day2');
+    <div class="footer">
+        - 00大學誠摯感謝您的參與 -
+    </div>
+</div>
 
-            // 重置樣式
-            const activeClass = ['bg-blue-500', 'text-white', 'shadow'];
-            const inactiveClass = ['bg-gray-200', 'text-gray-600', 'hover:bg-gray-300'];
-
-            if (day === 'day1') {
-                day1.classList.remove('hidden');
-                day2.classList.add('hidden');
-                
-                tabDay1.classList.add(...activeClass);
-                tabDay1.classList.remove(...inactiveClass);
-                
-                tabDay2.classList.add(...inactiveClass);
-                tabDay2.classList.remove(...activeClass);
-            } else {
-                day2.classList.remove('hidden');
-                day1.classList.add('hidden');
-                
-                tabDay2.classList.add(...activeClass);
-                tabDay2.classList.remove(...inactiveClass);
-                
-                tabDay1.classList.add(...inactiveClass);
-                tabDay1.classList.remove(...activeClass);
-            }
-        }
-    </script>
 </body>
 </html>
