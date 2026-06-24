@@ -189,98 +189,299 @@
     <div id="briefing-view" class="view-section active">
         <!-- Header -->
         <div class="header">
-            <div class="title">114學年度高雄美食會議</div>
-            <div class="subtitle">OOXX大學 · 115年6月24日–25日</div>
-        </div>
-
-        <div class="section profile">
-            <div class="profile-label">PRE-EVENT BRIEFING</div>
-            <div class="profile-name">XXX</div>
-            <div class="profile-title">OOXX大學 · 00處 · 00000</div>
-
-            <div class="btn-group">
-                <button class="btn" onclick="alert('議程功能建置中')">📅 專屬議程</button>
-                <button class="btn btn-primary" onclick="switchView('seatmap-view')">🗺️ 查看專題演講座位圖</button>
+            <div class="title">114學年度大學美食會議</div>
+            <div class="subtitle">OX大學 · 115年6月24日–25日</div>
+            <div class="badges">
+                <span class="badge">行前通知 No.543</span>
+                <span class="badge" style="background-color: #f3f4f6; color: #4b5563;">與會 - 一般</span>
             </div>
         </div>
 
+        <!-- Profile -->
+        <div class="section profile">
+            <div class="profile-label">PRE-EVENT BRIEFING</div>
+            <div class="profile-name">QQQ</div>
+            <div class="profile-title">OX大學 · OX處 · OOXX</div>
+            
+            <div class="status-badge">
+                尚未報到 · 當天請出示下方 QR Code
+            </div>
+
+            <div class="btn-group">
+                <button class="btn" onclick="alert('專屬議程功能準備中！')">📅 專屬議程</button>
+                <button class="btn btn-primary" onclick="switchToSeatMapView(7, 8)">🗺️ 查看專題演講座位圖</button>
+            </div>
+        </div>
+
+        <!-- Important Timeline -->
         <div class="section">
+            <div class="section-title">當 天 重 點 時 程</div>
+            <div class="timeline">
+                <div class="timeline-day">第一天 · 6/24（星期三）</div>
+                <div class="timeline-item">
+                    <div class="time">07:00</div>
+                    <div class="event">集合搭乘接駁</div>
+                    <div class="location">📍 高鐵左營站／臺鐵高雄站</div>
+                    <div class="transport">您的到校方式：搭乘接駁車1️⃣_9:25 發車</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">09:50–10:30</div>
+                    <div class="event">報到</div>
+                    <div class="location">📍 國研大樓B2 國際會議中心A廳</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">10:30</div>
+                    <div class="event">開幕式</div>
+                    <div class="location">📍 國研大樓B2 國際會議中心A廳</div>
+                </div>
+
+                <div class="timeline-day">第二天 · 6/30（星期二）</div>
+                <div class="timeline-item">
+                    <div class="time">08:30–09:00</div>
+                    <div class="event">報到</div>
+                    <div class="location">📍 國研大樓B2 國際會議中心A廳</div>
+                    <div class="transport">您的到校方式：搭乘接駁車</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">12:20</div>
+                    <div class="event">閉幕</div>
+                    <div class="location">📍 國研大樓B2 國際會議中心A廳</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Grid -->
+        <div class="section">
+            <div class="section-title">您 的 議 程 資 訊</div>
             <div class="info-grid">
                 <div class="info-item">
-                    <div class="info-label">專題演講座號</div>
-                    <div class="info-value highlight-text">第 7 排 第 8 號</div>
+                    <div class="info-label">專題演講座號 (點擊可查位置)</div>
+                    <div class="info-value interactive-link highlight-text" onclick="switchToSeatMapView(7, 8)">第 7 排 第 8 號</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">出席天數</div>
                     <div class="info-value">🆎 兩天皆參加</div>
                 </div>
+                <div class="info-item">
+                    <div class="info-label">用餐習慣</div>
+                    <div class="info-value">🍖 葷</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">第一天到校交通</div>
+                    <div class="info-value">搭乘接駁車1️⃣_9:25 發車</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">第二天到校交通</div>
+                    <div class="info-value">搭乘接駁車</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">車牌號碼（汽車）</div>
+                    <div class="info-value" style="color: #94a3b8;">未提供</div>
+                </div>
                 <div class="info-item full-width">
-                    <div class="info-label">專題演講地點</div>
-                    <div class="info-value">📍  國研大樓B2 國際會議中心A廳</div>
+                    <div class="info-label">分組座談一</div>
+                    <div class="info-value">傳統美食：阿月麵線</div>
+                </div>
+                <div class="info-item full-width">
+                    <div class="info-label">分組座談二</div>
+                    <div class="info-value">傳統便當：阿發美食</div>
+                </div>
+                <div class="info-item full-width">
+                    <div class="info-label">分組座談三</div>
+                    <div class="info-value">異國料理：囉囉嗦嗦酸辣粉</div>
                 </div>
             </div>
+
+            <!-- Modify Form -->
+            <div class="form-section">
+                <div style="font-weight: 700; margin-bottom: 15px; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+                    <span>✎</span> 修改車牌號碼／用餐習慣
+                </div>
+                <form onsubmit="event.preventDefault(); alert('修改已儲存！');">
+                    <div class="form-group">
+                        <label class="form-label">用餐習慣</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="diet" value="meat" checked> 🍖 葷</label>
+                            <label class="radio-label"><input type="radio" name="diet" value="veg"> 🥗 素</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">車牌號碼（停車／通行用，可留空）</label>
+                        <input type="text" class="form-control" placeholder="請輸入車牌號碼">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">校外參訪（龍虎塔）</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="tour" value="yes" checked> 參加</label>
+                            <label class="radio-label"><input type="radio" name="tour" value="no"> 取消參加</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">儲 存 修 改</button>
+                </form>
+            </div>
         </div>
-        <div class="footer">- OOXX大學誠摯感謝您的參與 -</div>
+
+        <!-- QR Code -->
+        <div class="section qr-section">
+            <div class="section-title" style="justify-content: center;">您 的 專 屬 報 到 QR CODE</div>
+            <div class="qr-wrapper">
+                <div class="qr-placeholder">
+                    <div class="qr-icon">📱</div>
+                    <div>[ 報到 QR Code ]</div>
+                </div>
+            </div>
+            <div class="qr-instructions">
+                📌 請截圖保存，當天於報到處出示掃描<br>
+                <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-block; margin-top: 8px;">點按此處開啟全螢幕報到</a>
+            </div>
+        </div>
+
+        <div class="footer">- OX大學誠摯感謝您的參與 -</div>
     </div>
 
-    <!-- SEAT MAP VIEW -->
+
+    <!-- ================= VIEW 2: INTERACTIVE SEAT MAP PAGE ================= -->
     <div id="seatmap-view" class="view-section">
+        <!-- Back Header -->
         <div class="seatmap-header">
             <button class="back-btn" onclick="switchView('briefing-view')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> 返回
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> 返回首頁
             </button>
             <div class="seatmap-title">專題演講座位圖</div>
         </div>
         
-        <div class="stage-area">講 台 (STAGE)</div>
-
-        <div class="seating-chart">
-            <script>
-                // Generate 12 rows of seats, 16 seats per row
-                for (let r = 1; r <= 12; r++) {
-                    document.write('<div class="seat-row">');
-                    document.write('<div class="row-num">第 ' + r + ' 排</div>');
-                    for (let s = 1; s <= 16; s++) {
-                        let isMySeat = (r === 7 && s === 8);
-                        let classNames = "seat" + (isMySeat ? " my-seat" : "");
-                        let seatLabel = isMySeat ? s : "";
-                        document.write('<div class="' + classNames + '">' + seatLabel + '</div>');
-                    }
-                    document.write('</div>');
-                }
-            </script>
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <label for="input-row">排數 (1-12):</label>
+                <input type="number" id="input-row" min="1" max="12" value="7">
+            </div>
+            <div class="control-group">
+                <label for="input-seat">座號 (1-16):</label>
+                <input type="number" id="input-seat" min="1" max="16" value="8">
+            </div>
+            <button class="btn-search" onclick="updateSeatMap()">定位座位</button>
         </div>
 
+        <!-- Dynamic Map -->
+        <div class="map-container">
+            <div id="message-box">目前顯示：您的專屬座位 第 7 排 第 8 號</div>
+            <div class="stage-area">講 台 (STAGE)</div>
+            
+            <div class="seating-chart" id="seating-chart">
+                <!-- Grid will be dynamically built by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Legend -->
         <div class="seatmap-legend">
             <div class="legend-item">
                 <div class="legend-box legend-my"></div>
-                <span>您的座位 (7排8號)</span>
+                <span>目標座位</span>
             </div>
             <div class="legend-item">
                 <div class="legend-box legend-other"></div>
                 <span>其他座位</span>
             </div>
         </div>
+        
+        <div class="footer">- 系統自動生成座位分布圖 -</div>
     </div>
 
 </div>
 
 <script>
+    const totalRows = 12;
+    const seatsPerRow = 16;
+    const chartContainer = document.getElementById('seating-chart');
+    const msgBox = document.getElementById('message-box');
+
+    // View switcher function
     function switchView(viewId) {
-        // Hide all views
         document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-        // Show target view
         document.getElementById(viewId).classList.add('active');
-        // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Direct initialization to seat map with specific row/seat from the main page
+    function switchToSeatMapView(row, seat) {
+        document.getElementById('input-row').value = row;
+        document.getElementById('input-seat').value = seat;
+        switchView('seatmap-view');
+        updateSeatMap();
+    }
+
+    // Build the seating chart grid structure
+    function buildSeatingGrid() {
+        chartContainer.innerHTML = ''; 
+        for (let r = 1; r <= totalRows; r++) {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'seat-row';
+            
+            const rowNum = document.createElement('div');
+            rowNum.className = 'row-num';
+            rowNum.textContent = '第 ' + r + ' 排';
+            rowDiv.appendChild(rowNum);
+
+            for (let s = 1; s <= seatsPerRow; s++) {
+                const seatDiv = document.createElement('div');
+                seatDiv.className = 'seat';
+                seatDiv.id = `seat-${r}-${s}`;
+                seatDiv.setAttribute('data-row', r);
+                seatDiv.setAttribute('data-seat', s);
+                
+                // Clicking a seat inside the grid updates the inputs and shifts focus
+                seatDiv.onclick = function() {
+                    document.getElementById('input-row').value = r;
+                    document.getElementById('input-seat').value = s;
+                    updateSeatMap();
+                };
+
+                rowDiv.appendChild(seatDiv);
+            }
+            chartContainer.appendChild(rowDiv);
+        }
+    }
+
+    // Refresh and update highlights on the map
+    function updateSeatMap() {
+        // Clear all previous highlights
+        document.querySelectorAll('.seat').forEach(seat => {
+            seat.classList.remove('my-seat');
+            seat.textContent = '';
+        });
+
+        // Parse user inputs
+        let targetRow = parseInt(document.getElementById('input-row').value);
+        let targetSeat = parseInt(document.getElementById('input-seat').value);
+
+        // Fail-safe bounds checking
+        if (isNaN(targetRow) || targetRow < 1 || targetRow > totalRows) targetRow = 7;
+        if (isNaN(targetSeat) || targetSeat < 1 || targetSeat > seatsPerRow) targetSeat = 8;
+        
+        document.getElementById('input-row').value = targetRow;
+        document.getElementById('input-seat').value = targetSeat;
+
+        // Apply new highlight state
+        const targetElement = document.getElementById(`seat-${targetRow}-${targetSeat}`);
+        if (targetElement) {
+            targetElement.classList.add('my-seat');
+            targetElement.textContent = targetSeat;
+            
+            if (targetRow === 7 && targetSeat === 8) {
+                msgBox.textContent = `目前顯示：您的專屬座位 第 7 排 第 8 號`;
+            } else {
+                msgBox.textContent = `目前顯示：第 ${targetRow} 排 第 ${targetSeat} 號`;
+            }
+        }
+    }
+
+    // App Initialization on load
+    window.onload = () => {
+        buildSeatingGrid();
+        updateSeatMap();
+    };
 </script>
 
 </body>
 </html>
-"""
-
-with open("briefing_and_seatmap.html", "w", encoding="utf-8") as f:
-    f.write(html_content_v2)
-
-print("Generated HTML successfully.")
