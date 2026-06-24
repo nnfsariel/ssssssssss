@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>行前資訊與座位圖 | 會議</title>
+    <title>行前資訊與座位查詢系統 | 聯席會議</title>
     <style>
         :root {
             --primary: #1f2937;
@@ -12,27 +12,36 @@
             --bg: #f3f4f6;
             --surface: #ffffff;
             --border: #e5e7eb;
-            --highlight: #ef4444; /* Red for seat */
+            --success: #10b981;
+            --highlight: #ef4444; /* Red for target seat */
+            --seat-bg: #cbd5e1;
+            --seat-border: #94a3b8;
         }
+        
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
             background-color: var(--bg);
             color: var(--primary);
             line-height: 1.6;
             margin: 0;
             padding: 20px 10px;
         }
+        
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             background: var(--surface);
             border-radius: 16px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             position: relative;
         }
-        
-        /* View Toggling */
+
+        /* View Toggling Layout (Single Page Application experience) */
         .view-section {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -41,16 +50,17 @@
             display: block;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Common Styles */
+        /* Header Style */
         .header {
             text-align: center;
             padding: 40px 20px 25px;
             border-bottom: 1px solid var(--border);
             position: relative;
+            background-color: #ffffff;
         }
         .header::before {
             content: '';
@@ -67,106 +77,117 @@
             display: flex; align-items: center; justify-content: center;
             color: var(--secondary); font-size: 12px; font-weight: bold;
         }
-        .title { font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; }
+        .title { font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; color: #111827; }
         .subtitle { color: var(--secondary); font-size: 0.95rem; }
-        
-        /* Profile Section */
+        .badges { margin: 15px 0 0; display: flex; justify-content: center; gap: 8px; }
+        .badge { background-color: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+
+        /* Sections */
         .section { padding: 30px 25px; border-bottom: 1px solid var(--border); }
+        .section:last-child { border-bottom: none; }
+        
+        /* Profile Info */
         .profile { text-align: center; }
         .profile-label { font-size: 0.75rem; letter-spacing: 2px; color: var(--secondary); margin-bottom: 10px; }
         .profile-name { font-size: 1.75rem; font-weight: 800; margin-bottom: 8px; }
         .profile-title { font-size: 0.95rem; color: var(--secondary); margin-bottom: 20px; }
-        
-        /* Buttons */
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; background-color: #fef3c7; color: #b45309; padding: 8px 16px; border-radius: 8px; font-size: 0.875rem; font-weight: 700; }
+        .status-badge::before { content: ''; display: inline-block; width: 8px; height: 8px; background-color: #f59e0b; border-radius: 50%; }
+
+        /* Navigation Buttons */
         .btn-group { display: flex; gap: 12px; margin-top: 25px; }
         .btn {
             flex: 1; display: inline-flex; justify-content: center; align-items: center; gap: 6px;
             background-color: #f8fafc; color: #334155; text-decoration: none;
             padding: 12px; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
-            border: 1px solid #cbd5e1; cursor: pointer;
+            border: 1px solid #cbd5e1; cursor: pointer; transition: background-color 0.2s;
         }
         .btn:hover { background-color: #e2e8f0; }
         .btn-primary { background-color: var(--accent); color: white; border: none; }
         .btn-primary:hover { background-color: #0369a1; }
-        
-        /* Info Grid */
+
+        /* Section Titles */
+        .section-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; color: #111827; }
+        .section-title::before { content: ''; display: inline-block; width: 4px; height: 18px; background-color: var(--accent); border-radius: 2px; }
+
+        /* Timeline Schedule */
+        .timeline { position: relative; padding-left: 24px; }
+        .timeline::before { content: ''; position: absolute; left: 4px; top: 6px; bottom: 0; width: 2px; background-color: #e2e8f0; }
+        .timeline-day { font-weight: 800; color: var(--accent); margin-bottom: 20px; margin-top: 10px; position: relative; font-size: 1.05rem; }
+        .timeline-day:first-child { margin-top: 0; }
+        .timeline-day::before { content: ''; position: absolute; left: -26.5px; top: 7px; width: 14px; height: 14px; background-color: #e0f2fe; border: 3px solid var(--accent); border-radius: 50%; }
+        .timeline-item { margin-bottom: 24px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -24px; top: 8px; width: 10px; height: 10px; background-color: #94a3b8; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 1px #cbd5e1; }
+        .time { font-weight: 700; font-size: 0.9rem; color: #475569; background-color: #f1f5f9; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
+        .event { font-weight: 700; font-size: 1rem; margin: 4px 0; color: #1e293b; }
+        .location { font-size: 0.875rem; color: #64748b; display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+        .transport { font-size: 0.85rem; color: #0369a1; background-color: #f0f9ff; padding: 4px 8px; border-radius: 4px; margin-top: 6px; display: inline-block; }
+
+        /* Info Display Grid */
         .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         @media (min-width: 480px) { .info-grid { grid-template-columns: 1fr 1fr; } .full-width { grid-column: span 2; } }
         .info-item { background-color: #f8fafc; padding: 16px; border-radius: 10px; border: 1px solid #e2e8f0; }
         .info-label { font-size: 0.8rem; color: #64748b; margin-bottom: 6px; font-weight: 600; }
         .info-value { font-weight: 700; font-size: 0.95rem; color: #1e293b; }
+        .info-value.interactive-link { color: var(--accent); text-decoration: underline; cursor: pointer; }
         .info-value.highlight-text { color: var(--highlight); font-size: 1.1rem; }
 
-        /* Seat Map Styles */
-        .seatmap-header {
-            display: flex; align-items: center; padding: 15px 20px;
-            border-bottom: 1px solid var(--border); background: #f8fafc;
-        }
-        .back-btn {
-            background: none; border: none; font-size: 1rem; color: var(--accent);
-            cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;
-        }
+        /* Form Updates */
+        .form-section { background-color: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-top: 20px; }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 8px; color: #334155; }
+        .form-control { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
+        .radio-group { display: flex; gap: 20px; }
+        .radio-label { display: flex; align-items: center; gap: 6px; font-size: 0.95rem; cursor: pointer; }
+        .btn-submit { background-color: var(--accent); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; }
+
+        /* QR Section */
+        .qr-section { text-align: center; }
+        .qr-wrapper { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: inline-block; margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        .qr-placeholder { width: 200px; height: 200px; background-color: #f1f5f9; border: 2px dashed #cbd5e1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #64748b; border-radius: 8px; font-size: 0.875rem; }
+        .qr-icon { font-size: 2rem; margin-bottom: 10px; }
+
+        /* Seat Map View Specifics */
+        .seatmap-header { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--border); background: #f8fafc; }
+        .back-btn { background: none; border: none; font-size: 1rem; color: var(--accent); cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600; }
         .seatmap-title { flex: 1; text-align: center; font-weight: 800; font-size: 1.2rem; margin-right: 60px; }
         
-        .stage-area {
-            background: #e2e8f0; color: #475569; text-align: center;
-            padding: 12px; margin: 20px 30px 40px; border-radius: 8px; font-weight: 800;
-            letter-spacing: 5px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .seating-chart {
-            overflow-x: auto;
-            padding: 10px 20px 30px;
-            white-space: nowrap;
-            text-align: center;
-        }
-        .seat-row {
-            display: flex; justify-content: center; align-items: center;
-            margin-bottom: 10px; gap: 6px;
-        }
-        .row-num {
-            width: 35px; text-align: right; margin-right: 15px;
-            font-size: 0.85rem; font-weight: 700; color: #64748b;
-        }
-        .seat {
-            width: 28px; height: 28px; background-color: #cbd5e1;
-            border-radius: 6px; border: 1px solid #94a3b8;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.75rem; color: transparent; cursor: default;
-            transition: transform 0.2s;
-        }
-        /* Create a center aisle */
-        .seat:nth-child(9) { margin-left: 30px; } 
-        
-        .seat.my-seat {
-            background-color: var(--highlight);
-            border-color: #b91c1c;
-            color: white;
-            font-weight: bold;
-            transform: scale(1.15);
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-            z-index: 10;
-        }
-        .seat:hover:not(.my-seat) { background-color: #94a3b8; }
+        .controls { display: flex; justify-content: center; align-items: center; gap: 15px; padding: 15px 20px; background-color: #f1f5f9; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+        .control-group { display: flex; align-items: center; gap: 6px; }
+        .control-group input { width: 60px; padding: 6px; border: 1px solid #cbd5e1; border-radius: 6px; text-align: center; font-size: 0.95rem; }
+        .btn-search { background-color: var(--accent); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
 
-        .seatmap-legend {
-            display: flex; justify-content: center; gap: 20px;
-            padding: 20px; border-top: 1px solid var(--border); background: #f8fafc;
-        }
-        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; }
-        .legend-box { width: 18px; height: 18px; border-radius: 4px; }
-        .legend-my { background-color: var(--highlight); }
-        .legend-other { background-color: #cbd5e1; border: 1px solid #94a3b8; }
+        .map-container { padding: 25px 15px; overflow-x: auto; text-align: center; }
+        #message-box { text-align: center; font-weight: bold; color: var(--highlight); margin-bottom: 15px; min-height: 24px; font-size: 0.95rem; }
+        .stage-area { background: #e2e8f0; color: #475569; text-align: center; padding: 12px; margin: 0 auto 30px; border-radius: 8px; font-weight: 800; letter-spacing: 6px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); max-width: 500px; font-size: 1rem; }
         
-        .footer { text-align: center; padding: 20px; font-size: 0.85rem; color: #94a3b8; }
+        .seating-chart { display: inline-block; white-space: nowrap; text-align: center; }
+        .seat-row { display: flex; justify-content: center; align-items: center; margin-bottom: 10px; gap: 6px; }
+        .row-num { width: 45px; text-align: right; margin-right: 12px; font-size: 0.85rem; font-weight: 700; color: #64748b; }
+        .seat { width: 26px; height: 26px; background-color: var(--seat-bg); border-radius: 5px; border: 1px solid var(--seat-border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: transparent; cursor: pointer; transition: all 0.2s; position: relative; }
+        .seat[data-seat="9"] { margin-left: 30px; } /* Center Aisle */
+        .seat:hover:not(.my-seat) { background-color: #94a3b8; color: white; }
+        .seat.my-seat { background-color: var(--highlight); border-color: #b91c1c; color: white; font-weight: bold; transform: scale(1.15); box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); z-index: 10; }
+
+        /* Seat Tooltip */
+        .seat:hover::after { content: "第 " attr(data-row) " 排 第 " attr(data-seat) " 號"; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 4px 6px; border-radius: 4px; font-size: 0.7rem; white-space: nowrap; pointer-events: none; z-index: 20; }
+
+        .seatmap-legend { display: flex; justify-content: center; gap: 20px; padding: 15px; border-top: 1px solid var(--border); background: #f8fafc; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; color: #475569; }
+        .legend-box { width: 16px; height: 16px; border-radius: 4px; }
+        .legend-my { background-color: var(--highlight); }
+        .legend-other { background-color: var(--seat-bg); border: 1px solid var(--seat-border); }
+
+        .footer { text-align: center; padding: 25px 20px; font-size: 0.85rem; color: #94a3b8; background-color: #ffffff; border-top: 1px solid var(--border); }
     </style>
 </head>
 <body>
 
 <div class="container">
     
-    <!-- MAIN BRIEFING VIEW -->
+    <!-- ================= VIEW 1: MAIN BRIEFING PAGE ================= -->
     <div id="briefing-view" class="view-section active">
+        <!-- Header -->
         <div class="header">
             <div class="title">114學年度高雄美食會議</div>
             <div class="subtitle">OOXX大學 · 115年6月24日–25日</div>
